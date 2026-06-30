@@ -15,6 +15,17 @@ yarn dev
 
 Open http://localhost:3000 with your browser to see the result.
 
+## Static deployment
+
+This repo is configured to export a static site with `next build`. The output is written to `out/`.
+
+For GitHub Pages deployments, the build reads:
+
+- `NEXT_PUBLIC_BASE_PATH`: repository subpath such as `/sentinel-docs`
+- `NEXT_PUBLIC_SITE_URL`: full public site URL used for metadata
+
+The workflow at [.github/workflows/deploy-pages.yml](/home/hari/workspace/sentinel-docs/.github/workflows/deploy-pages.yml) computes both automatically for project pages and user/org pages, builds the static export, and deploys `out/` to GitHub Pages.
+
 ## Explore
 
 In the project, you can see:
