@@ -17,7 +17,7 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
       - name: Checkout
@@ -40,16 +40,8 @@ jobs:
       - name: Compute static export paths
         shell: bash
         run: |
-          repo_name="${GITHUB_REPOSITORY#*/}"
-          owner="${GITHUB_REPOSITORY_OWNER,,}"
-
-          if [[ "$repo_name" == "${owner}.github.io" ]]; then
-            echo "NEXT_PUBLIC_BASE_PATH=" >> "$GITHUB_ENV"
-            echo "NEXT_PUBLIC_SITE_URL=https://${repo_name}" >> "$GITHUB_ENV"
-          else
-            echo "NEXT_PUBLIC_BASE_PATH=/${repo_name}" >> "$GITHUB_ENV"
-            echo "NEXT_PUBLIC_SITE_URL=https://${owner}.github.io/${repo_name}" >> "$GITHUB_ENV"
-          fi
+          echo "NEXT_PUBLIC_BASE_PATH=" >> "$GITHUB_ENV"
+          echo "NEXT_PUBLIC_SITE_URL=https://developer.tpsentinel.com" >> "$GITHUB_ENV"
 
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
@@ -67,7 +59,7 @@ jobs:
 
   deploy:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
