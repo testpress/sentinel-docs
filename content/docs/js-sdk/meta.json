@@ -1,0 +1,10 @@
+{
+  "title": "JS SDK",
+  "description": "Documentation for the JS SDK",
+  "icon": "Code",
+  "root": true,
+  "pages": [
+    "---Introduction---",
+    "index"
+  ]
+}

@@ -1,0 +1,11 @@
+{
+  "title": "Getting Started",
+  "description": "Documentation for getting started",
+  "icon": "Building",
+  "root": true,
+  "defaultOpen": true,
+  "pages": [
+    "---Introduction---",
+    "index"
+  ]
+}
