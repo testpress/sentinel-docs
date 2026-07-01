@@ -1,0 +1,47 @@
+---
+title: Quickstart
+description: Start a Sentinel session with the headless core SDK
+---
+
+# Quickstart
+
+This quickstart uses `@testpress/sentinel-core` only.
+
+## Install
+
+```bash
+npm install @testpress/sentinel-core
+```
+
+## Initialize Sentinel
+
+```ts
+import { Sentinel } from '@testpress/sentinel-core'
+
+Sentinel.init({
+  orgCode: 'your-org',
+  sessionId: 'session-id',
+  token: 'session-token',
+})
+```
+
+## Start Sentinel
+
+```ts
+await Sentinel.start()
+```
+
+`Sentinel.start()` runs setup first, then starts active proctoring after setup
+completes successfully.
+
+## What this package gives you
+
+`@testpress/sentinel-core` provides:
+
+- the setup flow
+- the runtime proctoring engine
+- the public event surface
+- browser-side policy-driven monitoring
+
+It does not render any UI. If you want the default candidate-facing UI, continue to
+[Adding UI](/docs/js-sdk/adding-ui).

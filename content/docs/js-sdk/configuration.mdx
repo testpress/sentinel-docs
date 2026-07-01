@@ -1,0 +1,51 @@
+---
+title: Configuration
+description: Reference for Sentinel.init options
+---
+
+# Configuration
+
+Initialize the SDK with `Sentinel.init(...)`.
+
+```ts
+Sentinel.init({
+  orgCode: 'your-org',
+  sessionId: 'session-id',
+  token: 'session-token',
+})
+```
+
+## Init options
+
+### `orgCode`
+
+```ts
+orgCode: string
+```
+
+The Sentinel organization identifier for the session.
+
+### `sessionId`
+
+```ts
+sessionId: string
+```
+
+The session identifier returned by your backend.
+
+### `token`
+
+```ts
+token: string
+```
+
+The session token returned by your backend for that session.
+
+## Runtime helpers
+
+You can also inspect current SDK state at runtime:
+
+```ts
+Sentinel.getConfig()
+Sentinel.getState()
+```

@@ -1,0 +1,77 @@
+---
+title: Example App
+description: Walk through the Sentinel example app built with core and UI packages
+---
+
+# Example App
+
+The example app lives in
+[testpress/sentinel-js-example](https://github.com/testpress/sentinel-js-example).
+
+It is a minimal React + TypeScript app that integrates both:
+
+- `@testpress/sentinel-core`
+- `@testpress/sentinel-ui`
+
+## Install the packages
+
+The demo app installs both SDK packages directly:
+
+```json
+{
+  "dependencies": {
+    "@testpress/sentinel-core": "1.0.3",
+    "@testpress/sentinel-ui": "1.0.0"
+  }
+}
+```
+
+## Initialize Sentinel from app config
+
+The app reads `orgCode`, `sessionId`, and `token`, then passes them to
+`Sentinel.init(...)`.
+
+```ts
+Sentinel.init({
+  orgCode: config.orgCode,
+  sessionId: config.sessionId,
+  token: config.token,
+})
+```
+
+## Mount the overlay
+
+The demo mounts the default overlay into a dedicated container.
+
+```ts
+const overlay = mountSentinelOverlay({
+  container: overlayContainer,
+  sentinel: Sentinel,
+  config: {
+    consent: { enabled: true },
+    sessionMonitor: { position: 'bottom-right' },
+    theme: 'system',
+  },
+})
+```
+
+## Listen to the public event stream
+
+The app also subscribes to public SDK events and logs them for debugging.
+
+```ts
+const unsubscribe = sentinelWithWildcard.on('*', (eventName, payload) => {
+  if (eventName === 'session:stateChanged') {
+    setSessionState(payload)
+  }
+  addLog(eventName, payload)
+})
+```
+
+## What the example is good for
+
+Use this app when you want to:
+
+- test real session credentials quickly
+- inspect the event stream during setup and runtime
+- see a working `mountSentinelOverlay(...)` integration in a browser app

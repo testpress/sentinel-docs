@@ -1,0 +1,10 @@
+{
+  "title": "API Reference",
+  "description": "Reference documentation for Sentinel APIs",
+  "icon": "BookOpen",
+  "root": true,
+  "pages": [
+    "---Introduction---",
+    "index"
+  ]
+}

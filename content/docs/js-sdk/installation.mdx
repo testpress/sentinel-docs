@@ -1,0 +1,70 @@
+---
+title: Installation
+description: Install Sentinel SDK packages with npm or load them from a CDN
+---
+
+# Installation
+
+The JS SDK covers both browser packages:
+
+- `@testpress/sentinel-core` for the headless SDK
+- `@testpress/sentinel-ui` for the default overlay UI
+
+## npm
+
+If you want the default UI overlays:
+
+```bash
+npm install @testpress/sentinel-core @testpress/sentinel-ui
+```
+
+If you only want the headless SDK:
+
+```bash
+npm install @testpress/sentinel-core
+```
+
+## CDN
+
+You can use the CDN in two ways:
+
+- split package imports
+- a single bundled file
+
+### Split package imports
+
+```html
+<script type="importmap">
+  {
+    "imports": {
+      "@testpress/sentinel-core": "https://static.tpsentinel.com/sdk/v2/core/1.0.2/sentinel-core.js",
+      "@testpress/sentinel-ui": "https://static.tpsentinel.com/sdk/v2/ui/1.0.0/sentinel-ui.js"
+    }
+  }
+</script>
+
+<script type="module">
+  import { Sentinel } from '@testpress/sentinel-core'
+  import { mountSentinelOverlay } from '@testpress/sentinel-ui'
+</script>
+```
+
+### Single bundle
+
+```html
+<script type="module">
+  import {
+    Sentinel,
+    mountSentinelOverlay,
+  } from "https://static.tpsentinel.com/sdk/v2/core_1.0.2_ui_1.0.0/sentinel-bundle.js";
+</script>
+```
+
+> [!IMPORTANT]
+> Pin exact versions in the CDN path. Do not point browser imports at moving targets.
+
+## Which package should you use?
+
+- Use `@testpress/sentinel-core` if you want to build your own UI
+- Use `@testpress/sentinel-core` + `@testpress/sentinel-ui` if you want the default
+  setup and monitoring overlays

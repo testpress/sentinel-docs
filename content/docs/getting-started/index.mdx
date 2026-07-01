@@ -1,8 +1,83 @@
 ---
 title: Getting Started
-description: Documentation for getting started
+description: What Sentinel is and how the core pieces fit together
 ---
+
+import { Step, Steps } from 'fumadocs-ui/components/steps';
 
 # Getting Started
 
-Content coming soon.
+Sentinel is a backend-driven proctoring system with three main parts:
+
+- Your backend
+- Sentinel backend
+- Frontend SDK
+
+Your backend decides who is being proctored and when a session should begin. Sentinel
+stores the session, policies, events, and captured evidence. The frontend SDK runs in
+the browser and powers the candidate-side proctoring flow.
+
+## Core entities
+
+The main resource chain looks like this:
+
+```text
+Workspace -> Session -> SessionToken -> Event / Artifact
+```
+
+- `Workspace`: A folder for proctoring policy and grouped sessions. You can map one
+  course or exam to a workspace, and then place each student attempt as a session
+  inside that workspace
+- `Session`: One candidate's proctored attempt
+- `SessionToken`: Authentication provided to the frontend SDK while it posts events
+  and artifacts from the student's browser during proctoring
+- `Event`: Something that happened during the session
+- `Artifact`: Captured evidence such as a snapshot or recording
+
+## How the pieces fit together
+
+<Steps>
+<Step>
+
+### Your backend creates a workspace
+
+The workspace groups sessions together and stores the default proctoring policy for a
+course or exam.
+
+</Step>
+
+<Step>
+
+### Your backend creates a session
+
+Each student attempt becomes a separate session inside that workspace.
+
+</Step>
+
+<Step>
+
+### Your backend creates a session token
+
+The session token is then passed to the frontend SDK for that student session.
+
+</Step>
+
+<Step>
+
+### The frontend starts Sentinel
+
+The SDK uses the session details to begin setup and start browser-side proctoring.
+
+</Step>
+
+<Step>
+
+### Sentinel captures events and artifacts
+
+During the session, Sentinel records activity and captures evidence based on the
+configured policy.
+
+</Step>
+</Steps>
+
+For the full end-to-end integration flow, continue to [Quickstart](/docs/getting-started/quickstart).

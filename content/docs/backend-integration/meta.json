@@ -1,6 +1,6 @@
 {
-  "title": "Backend / Webhooks",
-  "description": "Documentation for backend and webhooks",
+  "title": "Backend Integration",
+  "description": "Documentation for backend integration",
   "icon": "Database",
   "root": true,
   "pages": [

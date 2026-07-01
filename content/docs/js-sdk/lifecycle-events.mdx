@@ -1,0 +1,87 @@
+---
+title: Lifecycle Events
+description: Sentinel lifecycle methods and the public event surface
+---
+
+# Lifecycle Events
+
+## Core lifecycle
+
+The main `Sentinel` lifecycle methods are:
+
+```ts
+Sentinel.init(config)
+await Sentinel.start()
+await Sentinel.pause()
+await Sentinel.resume()
+await Sentinel.stop()
+Sentinel.reset()
+```
+
+`Sentinel` moves through these public session states:
+
+- `idle`
+- `ready`
+- `setup-in-progress`
+- `running`
+- `paused`
+- `stopped`
+- `failed`
+
+Use `Sentinel.getState()` to read the current state.
+
+## Subscribing to events
+
+```ts
+const unsubscribe = Sentinel.on('session:stateChanged', state => {
+  console.log(state)
+})
+
+unsubscribe()
+```
+
+## Public event categories
+
+### Session events
+
+- `session:stateChanged`
+- `runtime:failed`
+
+### Setup events
+
+- `setup:started`
+- `setup:fetching-policy`
+- `setup:steps-resolved`
+- `setup:check-started`
+- `setup:check-passed`
+- `setup:check-failed`
+- `setup:awaiting-permissions`
+- `setup:validating-permissions`
+- `setup:permission-validation-failed`
+- `setup:completed`
+- `setup:failed`
+
+### Identity events
+
+- `setup:identity-started`
+- `setup:identity-capturing`
+- `setup:identity-capture-failed`
+- `setup:identity-verifying`
+- `setup:identity-verified`
+- `setup:identity-rejected`
+- `setup:identity-failed`
+
+### Anomaly events
+
+- `anomaly:detected`
+- `anomaly:confirmed`
+- `anomaly:cleared`
+- `anomaly:resolved`
+
+## When to listen
+
+- Listen to `session:stateChanged` for overall lifecycle changes
+- Listen to setup events if you are building a custom UI on top of
+  `@testpress/sentinel-core`
+- Listen to anomaly events if you want to surface warnings or audit activity in your
+  own application

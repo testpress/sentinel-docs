@@ -6,6 +6,7 @@
   "defaultOpen": true,
   "pages": [
     "---Introduction---",
-    "index"
+    "index",
+    "quickstart"
   ]
 }

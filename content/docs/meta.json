@@ -1,7 +1,8 @@
 {
   "pages": [
     "getting-started",
-    "backend-webhooks",
-    "js-sdk"
+    "backend-integration",
+    "js-sdk",
+    "api-reference"
   ]
 }

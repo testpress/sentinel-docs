@@ -1,0 +1,101 @@
+---
+title: Quickstart
+description: End-to-end Sentinel integration on a single page
+---
+
+# Quickstart
+
+This guide walks through the full Sentinel integration flow from setup to browser
+startup on one page.
+
+In this example, we will treat one exam or course as a single workspace, and each
+student attempt as a separate session inside that workspace.
+
+## 1. Generate and store your API token
+
+Create an API token for your backend and store it securely.
+
+Use this token only from your server-side integration when creating and managing
+Sentinel resources.
+
+## 2. Create a workspace
+
+Create a workspace for the course or exam you want to monitor.
+
+A workspace acts like a folder that stores the default proctoring policy and groups
+related sessions together.
+
+For example:
+
+- `Python Certification Exam` can be one workspace
+- every student attempt for that exam becomes a session inside that workspace
+
+See [API Reference](/docs/api-reference) for the workspace creation payload.
+
+## 3. Create a session and session token
+
+When a candidate starts, your backend should:
+
+1. Create a session for that candidate inside the workspace.
+2. Generate a session token for that session.
+
+At the end of this step, your frontend should have the identifiers and token it needs
+to start Sentinel for that candidate session.
+
+## 4. Install the SDK packages
+
+Install the core SDK and the default UI package:
+
+```bash
+npm install @testpress/sentinel-core @testpress/sentinel-ui
+```
+
+`@testpress/sentinel-core` provides the headless proctoring engine.
+
+`@testpress/sentinel-ui` provides the default UI overlays for setup, consent,
+permissions, identity verification, warnings, and session monitoring.
+
+## 5. Initialize Sentinel and mount the default UI
+
+On the frontend, initialize Sentinel with the session details returned by your backend,
+then mount the default UI overlay.
+
+```ts
+import { Sentinel } from '@testpress/sentinel-core'
+import { mountSentinelOverlay } from '@testpress/sentinel-ui'
+
+Sentinel.init({
+  orgCode: '<organization-id>',
+  sessionId: '<session-id>',
+  token: '<session-token>',
+})
+
+const overlay = mountSentinelOverlay({
+  container: document.body,
+  sentinel: Sentinel,
+})
+```
+
+The default overlay integrates with the headless SDK and handles the candidate-facing
+setup and session UI automatically.
+
+If you need to remove it later:
+
+```ts
+overlay.unmount()
+```
+
+## What happens next
+
+Once the session is running:
+
+- Sentinel applies the session policy
+- The candidate completes setup in the browser
+- Sentinel runs anomaly detection and periodic snapshots if configured in the policy
+- Events and evidence are captured for that session
+
+From here, move to:
+
+- [Backend Integration](/docs/backend-integration) for the server-side resource flow
+- [JS SDK](/docs/js-sdk) for frontend integration details
+- [API Reference](/docs/api-reference) for request and response shapes

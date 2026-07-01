@@ -1,10 +1,15 @@
 {
   "title": "JS SDK",
-  "description": "Documentation for the JS SDK",
+  "description": "Sentinel browser SDK documentation",
   "icon": "Code",
   "root": true,
   "pages": [
     "---Introduction---",
-    "index"
+    "installation",
+    "quickstart",
+    "adding-ui",
+    "lifecycle-events",
+    "configuration",
+    "example-app"
   ]
 }

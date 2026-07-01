@@ -1,0 +1,53 @@
+---
+title: Adding UI
+description: Mount the default Sentinel UI overlay on top of the core SDK
+---
+
+# Adding UI
+
+Use `@testpress/sentinel-ui` when you want the default Sentinel overlays instead of
+building your own UI around the headless SDK.
+
+## Install
+
+```bash
+npm install @testpress/sentinel-core @testpress/sentinel-ui
+```
+
+## Mount the overlay
+
+```ts
+import { Sentinel } from '@testpress/sentinel-core'
+import { mountSentinelOverlay } from '@testpress/sentinel-ui'
+
+Sentinel.init({
+  orgCode: 'your-org',
+  sessionId: 'session-id',
+  token: 'session-token',
+})
+
+const overlay = mountSentinelOverlay({
+  container: document.body,
+  sentinel: Sentinel,
+})
+```
+
+`@testpress/sentinel-ui` renders the default setup and monitoring overlays for:
+
+- setup and consent
+- permission collection and validation
+- identity verification
+- runtime warnings
+- session monitoring
+
+## Unmount the overlay
+
+```ts
+overlay.unmount()
+```
+
+## Notes
+
+- `@testpress/sentinel-ui` depends on `@testpress/sentinel-core`
+- the overlay renders into a Shadow DOM host attached to the container you provide
+- mounting the overlay starts the setup flow automatically
