@@ -13,19 +13,19 @@ const flowSteps = [
   {
     step: '02',
     title: 'Backend creates session',
-    description: 'Your server creates the Sentinel session against that workspace.',
+    description: 'Your server creates the Sentinel session when the user starts an activity that needs proctoring.',
     icon: Server,
   },
   {
     step: '03',
     title: 'Backend generates token',
-    description: 'Your server mints a browser-safe session token for that session.',
+    description: 'Your server generates the session token used to authenticate the SDK.',
     icon: KeyRound,
   },
   {
     step: '04',
     title: 'SDK starts with token',
-    description: 'The browser initializes the JS SDK with the token and begins streaming events.',
+    description: 'The browser initializes the JS SDK with the token and begins proctoring.',
     icon: MonitorSmartphone,
   },
 ];
@@ -39,7 +39,7 @@ const navCards = [
   },
   {
     title: 'JS SDK',
-    description: 'Install the browser SDK and start Sentinel with frontend-safe config.',
+    description: 'Install the browser SDK and start Sentinel with session config from your backend.',
     href: '/docs/js-sdk/installation',
     icon: Code2,
   },
@@ -73,12 +73,11 @@ export default function HomePage() {
                 Sentinel Docs
               </p>
               <h1 className="max-w-2xl text-4xl font-semibold tracking-tight text-fd-foreground md:text-5xl">
-                Session-based proctoring, with a browser SDK that starts from your token.
+                AI proctoring, built for your stack.
               </h1>
               <p className="max-w-2xl text-[1.05rem] leading-8 text-fd-muted-foreground">
-                Sentinel is a backend-driven proctoring system: your backend manages sessions and
-                policies through the Admin API, while the JS SDK runs in-browser to capture media
-                and stream events.
+                Your backend manages sessions and policy through the Admin API, while the Sentinel
+                JS SDK runs in-browser to capture anomalies, media and stream events.
               </p>
             </div>
 
@@ -101,7 +100,7 @@ export default function HomePage() {
 
           <div className="rounded-[1.9rem] border border-[#0667FC]/15 bg-[radial-gradient(circle_at_top_left,rgba(6,103,252,0.18),transparent_42%),linear-gradient(135deg,rgba(6,103,252,0.08),rgba(15,23,42,0.02))] p-3 shadow-[0_18px_45px_rgba(15,23,42,0.08)] dark:border-[#0667FC]/20 dark:bg-[radial-gradient(circle_at_top_left,rgba(6,103,252,0.22),transparent_38%),linear-gradient(135deg,rgba(15,23,42,0.94),rgba(2,6,23,0.94))] dark:shadow-none">
             <CodeBlock
-              title="Browser SDK preview"
+              title="SDK initialization"
               className="my-0 overflow-hidden rounded-[1.35rem] border-white/10 bg-stone-950 text-stone-50 shadow-none"
               viewportProps={{ className: 'px-4 py-4' }}
             >
