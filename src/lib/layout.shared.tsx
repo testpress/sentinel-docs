@@ -201,12 +201,6 @@ export function docsLinks(): LinkItemType[] {
       children: productsMenu(),
     },
     {
-      type: 'menu',
-      on: 'menu',
-      text: 'Products',
-      items: productsItems,
-    },
-    {
       type: 'custom',
       on: 'nav',
       secondary: true,
