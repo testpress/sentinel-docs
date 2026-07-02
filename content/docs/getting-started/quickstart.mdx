@@ -3,13 +3,16 @@ title: Quickstart
 description: End-to-end Sentinel integration on a single page
 ---
 
+import { Card, Cards } from 'fumadocs-ui/components/card';
+
 # Quickstart
 
 This guide walks through the full Sentinel integration flow from setup to browser
 startup on one page.
 
-In this example, we will treat one exam or course as a single workspace, and each
-student attempt as a separate session inside that workspace.
+In this example, we will treat one exam or course as a single workspace. Each
+student attempt becomes a separate session created under that workspace, so it
+uses the workspace policy automatically.
 
 ## 1. Generate and store your API token
 
@@ -25,12 +28,24 @@ Create a workspace for the course or exam you want to monitor.
 A workspace acts like a folder that stores the default proctoring policy and groups
 related sessions together.
 
+You can create workspaces manually from the dashboard, or automate them through
+your backend using the workspace creation API. A common pattern is to create a
+workspace when an exam or course is created in your portal, store the returned
+workspace ID in your backend, and then create a session under that workspace
+whenever a student starts an attempt.
+
 For example:
 
 - `Python Certification Exam` can be one workspace
-- every student attempt for that exam becomes a session inside that workspace
+- every student attempt for that exam becomes a session created under that workspace
 
-See [API Reference](/docs/api-reference) for the workspace creation payload.
+<Cards>
+  <Card
+    href="/docs/api-reference/create_workspace_v1_admin__org_uuid__workspaces_post"
+    title="Create Workspace API"
+    description="Create a workspace for an exam or course."
+  />
+</Cards>
 
 ## 3. Create a session and session token
 
@@ -41,6 +56,19 @@ When a candidate starts, your backend should:
 
 At the end of this step, your frontend should have the identifiers and token it needs
 to start Sentinel for that candidate session.
+
+<Cards>
+  <Card
+    href="/docs/api-reference/create_workspace_session_v1_admin__org_uuid__workspaces__workspace_uuid__sessions__post"
+    title="Create Session API"
+    description="Create a student attempt under a workspace."
+  />
+  <Card
+    href="/docs/api-reference/generate_session_token_v1_admin__org_uuid__sessions__session_uuid__create_token__post"
+    title="Generate Session Token API"
+    description="Generate the frontend token for a session."
+  />
+</Cards>
 
 ## 4. Install the SDK packages
 

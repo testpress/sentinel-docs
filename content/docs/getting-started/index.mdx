@@ -7,15 +7,16 @@ import { Step, Steps } from 'fumadocs-ui/components/steps';
 
 # Getting Started
 
-Sentinel is a backend-driven proctoring system with three main parts:
+The integration has three main parts:
 
 - Your backend
-- Sentinel backend
-- Frontend SDK
+- Sentinel API
+- Sentinel frontend SDK
 
-Your backend decides who is being proctored and when a session should begin. Sentinel
-stores the session, policies, events, and captured evidence. The frontend SDK runs in
-the browser and powers the candidate-side proctoring flow.
+Your backend decides who is being proctored and when a session should begin. The
+Sentinel API stores workspaces, sessions, policies, events, and captured evidence.
+The Sentinel frontend SDK runs in the browser and powers the candidate-side
+proctoring flow.
 
 ## Core entities
 
@@ -26,8 +27,8 @@ Workspace -> Session -> SessionToken -> Event / Artifact
 ```
 
 - `Workspace`: A folder for proctoring policy and grouped sessions. You can map one
-  course or exam to a workspace, and then place each student attempt as a session
-  inside that workspace
+  course or exam to a workspace, and then create each student attempt as a session
+  under that workspace
 - `Session`: One candidate's proctored attempt
 - `SessionToken`: Authentication provided to the frontend SDK while it posts events
   and artifacts from the student's browser during proctoring
@@ -50,7 +51,7 @@ course or exam.
 
 ### Your backend creates a session
 
-Each student attempt becomes a separate session inside that workspace.
+Each student attempt becomes a separate session under that workspace.
 
 </Step>
 
