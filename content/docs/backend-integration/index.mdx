@@ -1,8 +1,36 @@
 ---
 title: Backend Integration
-description: Documentation for backend integration
+description: Server-side setup and request flow for Sentinel
 ---
+
+import { Card, Cards } from 'fumadocs-ui/components/card';
 
 # Backend Integration
 
-Content coming soon.
+Sentinel is designed to be started from your backend. Your server owns the Sentinel
+API token, creates sessions, generates session tokens, and returns only the
+frontend-safe values needed by the browser.
+
+The browser should never create Sentinel resources directly. It should receive a
+`sessionId`, `token`, and `orgCode` from your backend, then pass them to the SDK.
+
+<Cards>
+  <Card
+    href="/docs/backend-integration/authentication"
+    title="Authentication"
+    description="Generate and store your backend API token."
+  />
+  <Card
+    href="/docs/backend-integration/integration-flow"
+    title="Integration Flow"
+    description="Create a session, create a session token, and return frontend config."
+  />
+  <Card
+    href="/docs/backend-integration/key-behaviors"
+    title="Key Behaviors"
+    description="Candidate reuse, policy overrides, and policy freeze behavior."
+  />
+</Cards>
+
+If you need exact request and response shapes for any step, follow the linked
+[API Reference](/docs/api-reference) pages from each guide.

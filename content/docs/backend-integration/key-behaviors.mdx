@@ -1,0 +1,44 @@
+---
+title: Key Behaviors
+description: Important backend behaviors for candidates and policy handling
+---
+
+# Key Behaviors
+
+These backend behaviors are important to understand before you wire Sentinel into a
+production flow.
+
+## `external_id` controls candidate reuse
+
+Candidate identity in Sentinel is anchored on `external_id`.
+
+When you pass candidate details while calling
+[Create Workspace Session](/docs/api-reference/create_workspace_session_v1_admin__org_uuid__workspaces__workspace_uuid__sessions__post),
+use a stable `external_id` from your system for that person.
+
+That lets Sentinel associate repeated attempts with the same candidate record rather
+than treating every attempt as a brand-new person.
+
+If you manage candidates separately, see
+[Create Candidate](/docs/api-reference/create_candidate_v1_admin__org_uuid__candidates__post).
+
+## `session_policies` override workspace defaults
+
+Workspaces hold the default policy for a course or exam. When you create a session,
+you can optionally send `session_policies` to override those defaults for that one
+attempt.
+
+Use this when a particular session needs different behavior than the workspace
+baseline, while still keeping the workspace policy as the default for everyone else.
+
+## Policy is frozen when the session is created
+
+Session policy is effectively fixed at session creation time.
+
+If you later update the workspace policy with
+[Update Workspace](/docs/api-reference/update_workspace_v1_admin__org_uuid__workspaces__workspace_uuid__put),
+that change does not retroactively alter sessions that already exist.
+
+If you need different behavior for a candidate who has not started yet, create the
+session with the intended `session_policies` or update the workspace before creating
+that session.

@@ -1,0 +1,36 @@
+---
+title: Authentication
+description: Generate and store your Sentinel backend API token
+---
+
+# Authentication
+
+Sentinel API authentication is a backend concern. Generate one API token for your
+server-side integration, store it securely, and use it for all Sentinel admin API
+calls.
+
+## One-time setup
+
+Call [Login](/docs/api-reference/login_auth_login_post) from a trusted environment to
+generate an auth token for your backend.
+
+Store the returned token in a server-side secret such as:
+
+```bash
+SENTINEL_API_TOKEN=...
+```
+
+Use that value only on the backend. Do not expose it to the browser, bundle it into
+frontend code, or return it from your own API.
+
+## Recommended storage pattern
+
+- Generate the token once during setup.
+- Save it in your secrets manager or environment configuration.
+- Read it from `SENTINEL_API_TOKEN` inside your backend service.
+- Use it for Sentinel admin endpoints such as workspace, candidate, session, and
+  session-token creation.
+
+If you need to invalidate a token, use
+[Revoke Auth Token](/docs/api-reference/revoke_auth_token_auth_revoke_post) and then
+replace it in your backend configuration.

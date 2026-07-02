@@ -1,0 +1,72 @@
+---
+title: Integration Flow
+description: Ordered backend walkthrough from session creation to frontend handoff
+---
+
+import { Step, Steps } from 'fumadocs-ui/components/steps';
+
+# Integration Flow
+
+This is the recommended server-side flow when a candidate is about to begin a
+proctored attempt.
+
+The backend creates the Sentinel resources first, then returns only the values the
+frontend SDK needs to start.
+
+<Steps>
+<Step>
+
+### Create a session in the workspace
+
+When the candidate starts, your backend creates a session inside the correct
+workspace by calling
+[Create Workspace Session](/docs/api-reference/create_workspace_session_v1_admin__org_uuid__workspaces__workspace_uuid__sessions__post).
+
+This is where you attach the candidate to the attempt and, if needed, provide
+session-level policy overrides.
+
+</Step>
+
+<Step>
+
+### Generate a session token
+
+After the session exists, your backend calls
+[Generate Session Token](/docs/api-reference/generate_session_token_v1_admin__org_uuid__sessions__session_uuid__create_token__post)
+for that session.
+
+The returned token is meant for the frontend SDK, not for your admin integration.
+
+</Step>
+
+<Step>
+
+### Return frontend-safe config
+
+Your backend returns these values to the frontend:
+
+- `sessionId`
+- `token`
+- `orgCode`
+
+The frontend then passes them to Sentinel during SDK initialization.
+
+</Step>
+</Steps>
+
+## Recommended backend shape
+
+In production, it is usually cleaner to combine the Sentinel calls into one endpoint
+in your own backend.
+
+For example, your app can expose a single "start proctored attempt" endpoint that:
+
+1. Creates the Sentinel session.
+2. Generates the Sentinel session token.
+3. Returns `sessionId`, `token`, and `orgCode` to the browser.
+
+This keeps Sentinel admin credentials on the server and gives your frontend one
+simple handoff step.
+
+For the frontend initialization step after this handoff, continue to
+[Quickstart](/docs/getting-started/quickstart) or [JS SDK](/docs/js-sdk).
