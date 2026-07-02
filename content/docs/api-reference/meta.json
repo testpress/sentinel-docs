@@ -5,6 +5,22 @@
   "root": true,
   "pages": [
     "---Introduction---",
-    "index"
+    "index",
+    "---Auth---",
+    "login_auth_login_post",
+    "revoke_auth_token_auth_revoke_post",
+    "---Workspaces---",
+    "list_workspaces_v1_admin__org_uuid__workspaces_get",
+    "create_workspace_v1_admin__org_uuid__workspaces_post",
+    "update_workspace_v1_admin__org_uuid__workspaces__workspace_uuid__put",
+    "---Admin Candidates---",
+    "create_candidate_v1_admin__org_uuid__candidates__post",
+    "---Admin Sessions---",
+    "create_workspace_session_v1_admin__org_uuid__workspaces__workspace_uuid__sessions__post",
+    "generate_session_token_v1_admin__org_uuid__sessions__session_uuid__create_token__post",
+    "---Events---",
+    "list_candidate_events_v1_admin__org_uuid__workspaces__workspace_uuid__candidates__candidate_external_id__events__get",
+    "---Public Workspace Policy---",
+    "get_workspace_policy_v1__org_uuid__workspaces__workspace_uuid__policy__get"
   ]
 }
