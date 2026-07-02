@@ -67,24 +67,45 @@ const documentationMenuItems: MainItemType[] = documentationItems.map((item) => 
 
 const productsItems = [
   {
-    text: 'Online Exam Software',
-    url: 'https://testpress.tech/online-exam-software/features/',
+    text: 'Online Exam Software and LMS',
+    description: 'Run online exams, manage courses, and deliver training from a single platform.',
+    url: 'https://testpress.tech/',
+    productName: 'Testpress',
     external: true,
     active: 'none' as const,
   },
   {
-    text: 'Learning Management System',
-    url: 'https://testpress.tech/teach-online/',
-    external: true,
-    active: 'none' as const,
-  },
-  {
-    text: 'Video Streaming Platform',
+    text: 'Video and Live Streaming',
+    description: 'All-in-One Platform for Secure Video Hosting and Live Streaming for your organization',
     url: 'https://tpstreams.com/',
+    productName: 'TPStreams',
     external: true,
     active: 'none' as const,
   },
 ];
+
+function productsMenu() {
+  return (
+    <NavbarMenu>
+      <NavbarMenuTrigger>Products</NavbarMenuTrigger>
+      <NavbarMenuContent className="lg:grid-cols-2">
+        {productsItems.map((item) => (
+          <NavbarMenuLink key={item.url} href={item.url} external={item.external}>
+            <div className="pb-2">
+              <div className="mb-4 inline-flex rounded-full border border-stone-200 bg-stone-100 px-3 py-1 text-sm font-semibold tracking-tight text-stone-900 dark:border-stone-700 dark:bg-stone-800 dark:text-stone-100">
+                {item.productName}
+              </div>
+              <div className="space-y-1">
+                <p className="text-base font-medium">{item.text}</p>
+                <p className="text-sm text-fd-muted-foreground">{item.description}</p>
+              </div>
+            </div>
+          </NavbarMenuLink>
+        ))}
+      </NavbarMenuContent>
+    </NavbarMenu>
+  );
+}
 
 function loginButton() {
   return (
@@ -146,7 +167,13 @@ export function homeLinks(): LinkItemType[] {
       items: documentationMenuItems,
     },
     {
+      type: 'custom',
+      on: 'nav',
+      children: productsMenu(),
+    },
+    {
       type: 'menu',
+      on: 'menu',
       text: 'Products',
       items: productsItems,
     },
@@ -169,8 +196,13 @@ export function docsLinks(): LinkItemType[] {
       items: documentationMenuItems,
     },
     {
-      type: 'menu',
+      type: 'custom',
       on: 'nav',
+      children: productsMenu(),
+    },
+    {
+      type: 'menu',
+      on: 'menu',
       text: 'Products',
       items: productsItems,
     },
