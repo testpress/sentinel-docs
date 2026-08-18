@@ -26,37 +26,16 @@ npm install @testpress/sentinel-core
 
 ## CDN
 
-You can use the CDN in two ways:
-
-- split package imports
-- a single bundled file
-
-### Split package imports
-
-```html
-<script type="importmap">
-  {
-    "imports": {
-      "@testpress/sentinel-core": "https://static.tpsentinel.com/sdk/v2/core/1.0.2/sentinel-core.js",
-      "@testpress/sentinel-ui": "https://static.tpsentinel.com/sdk/v2/ui/1.0.0/sentinel-ui.js"
-    }
-  }
-</script>
-
-<script type="module">
-  import { Sentinel } from '@testpress/sentinel-core'
-  import { mountSentinelOverlay } from '@testpress/sentinel-ui'
-</script>
-```
-
-### Single bundle
+Use the single CDN bundle when you want the default UI overlays. The bundle
+includes both `TPSentinel` and `TPSentinelUI`, with no browser import map or
+separate package imports required.
 
 ```html
 <script type="module">
   import {
-    Sentinel,
-    mountSentinelOverlay,
-  } from "https://static.tpsentinel.com/sdk/v2/core_1.0.2_ui_1.0.0/sentinel-bundle.js";
+    TPSentinel,
+    TPSentinelUI,
+  } from "https://static.tpsentinel.com/sdk/v2/core_1.0.6_ui_1.0.6/sentinel-bundle.js";
 </script>
 ```
 

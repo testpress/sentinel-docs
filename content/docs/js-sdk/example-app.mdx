@@ -26,44 +26,57 @@ The demo app installs both SDK packages directly:
 }
 ```
 
-## Initialize Sentinel from app config
+## Create Sentinel from app config
 
-The app reads `orgCode`, `sessionId`, and `token`, then passes them to
-`Sentinel.init(...)`.
+The app reads `orgCode`, `sessionId`, and `token`, then creates the core and UI
+instances.
 
 ```ts
-Sentinel.init({
+import { TPSentinel } from '@testpress/sentinel-core'
+import { TPSentinelUI } from '@testpress/sentinel-ui'
+
+const sentinel = TPSentinel.create({
   orgCode: config.orgCode,
   sessionId: config.sessionId,
   token: config.token,
 })
 ```
 
-## Mount the overlay
+## Start the UI
 
-The demo mounts the default overlay into a dedicated container.
+The demo creates the default UI with the Sentinel instance and starts it.
 
 ```ts
-const overlay = mountSentinelOverlay({
-  container: overlayContainer,
-  sentinel: Sentinel,
+const sentinelUI = TPSentinelUI.create({
+  sentinel,
   config: {
-    consent: { enabled: true },
-    sessionMonitor: { position: 'bottom-right' },
     theme: 'system',
+    setup: {
+      showCancelButton: true,
+      onCancel: () => {
+        console.log('Setup cancelled')
+      },
+    },
+    sessionMonitor: {
+      position: 'top-right',
+      enableMinimize: true,
+    },
   },
 })
+
+await sentinelUI.start()
 ```
 
 ## Listen to the public event stream
 
-The app also subscribes to public SDK events and logs them for debugging.
+The app subscribes to state changes and public SDK events for debugging.
 
 ```ts
-const unsubscribe = sentinelWithWildcard.on('*', (eventName, payload) => {
-  if (eventName === 'session:stateChanged') {
-    setSessionState(payload)
-  }
+const unsubscribeState = sentinel.onStateChanged(state => {
+  setSessionState(state)
+})
+
+const unsubscribe = sentinel.on('*', (eventName, payload) => {
   addLog(eventName, payload)
 })
 ```
@@ -74,4 +87,4 @@ Use this app when you want to:
 
 - test real session credentials quickly
 - inspect the event stream during setup and runtime
-- see a working `mountSentinelOverlay(...)` integration in a browser app
+- see a working `TPSentinelUI` integration in a browser app

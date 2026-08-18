@@ -7,69 +7,105 @@ description: Sentinel lifecycle methods and the public event surface
 
 ## Core lifecycle
 
-The main `Sentinel` lifecycle methods are:
+Create a Sentinel instance, then use its lifecycle methods:
 
 ```ts
-Sentinel.init(config)
-await Sentinel.start()
-await Sentinel.pause()
-await Sentinel.resume()
-await Sentinel.stop()
-Sentinel.reset()
+import { TPSentinel } from '@testpress/sentinel-core'
+
+const sentinel = TPSentinel.create(config)
+sentinel.getState()
+sentinel.getPendingUserAction()
+await sentinel.prepare()
+await sentinel.resolveUserAction(payload)
+await sentinel.start()
+await sentinel.pause()
+await sentinel.resume()
+await sentinel.stop()
+await sentinel.destroy()
 ```
 
-`Sentinel` moves through these public session states:
+The Sentinel instance moves through these public session states:
 
-- `idle`
+- `created`
+- `preparing`
+- `awaiting_user_action`
 - `ready`
-- `setup-in-progress`
+- `starting`
 - `running`
 - `paused`
 - `stopped`
 - `failed`
+- `destroyed`
 
-Use `Sentinel.getState()` to read the current state.
+Use `sentinel.getState()` to read the current state.
 
-## Subscribing to events
+## Observing state changes
 
 ```ts
-const unsubscribe = Sentinel.on('session:stateChanged', state => {
-  console.log(state)
+const unsubscribe = sentinel.onStateChanged(state => {
+  console.log('Sentinel state:', state)
 })
 
 unsubscribe()
 ```
 
+## Pending user actions
+
+During `prepare()`, Sentinel can move to `awaiting_user_action`. Read the pending
+action and pass the user's response back to the SDK before continuing:
+
+```ts
+const action = sentinel.getPendingUserAction()
+
+if (action) {
+  await sentinel.resolveUserAction(payload)
+}
+```
+
+Calling `resolveUserAction(...)` when there is no pending user action throws a
+`TPSentinelError`.
+
+## Subscribing to events
+
+Use `on` and `off` to manage event handlers directly:
+
+```ts
+const handler = payload => {
+  console.log(payload)
+}
+
+sentinel.on('anomaly:detected', handler)
+sentinel.off('anomaly:detected', handler)
+```
+
 ## Public event categories
 
-### Session events
+### Runtime events
 
-- `session:stateChanged`
 - `runtime:failed`
 
-### Setup events
+### Preparation events
 
-- `setup:started`
-- `setup:fetching-policy`
-- `setup:steps-resolved`
-- `setup:check-started`
-- `setup:check-passed`
-- `setup:check-failed`
-- `setup:awaiting-permissions`
-- `setup:validating-permissions`
-- `setup:permission-validation-failed`
-- `setup:completed`
-- `setup:failed`
+- `preparing:started`
+- `preparing:fetching-policy`
+- `preparing:check-started`
+- `preparing:check-passed`
+- `preparing:check-failed`
+- `preparing:awaiting-permissions`
+- `preparing:validating-permissions`
+- `preparing:permission-validation-failed`
+- `preparing:completed`
+- `preparing:failed`
 
 ### Identity events
 
-- `setup:identity-started`
-- `setup:identity-capturing`
-- `setup:identity-capture-failed`
-- `setup:identity-verifying`
-- `setup:identity-verified`
-- `setup:identity-rejected`
-- `setup:identity-failed`
+- `preparing:identity-started`
+- `preparing:identity-capturing`
+- `preparing:identity-capture-failed`
+- `preparing:identity-verifying`
+- `preparing:identity-verified`
+- `preparing:identity-rejected`
+- `preparing:identity-failed`
 
 ### Anomaly events
 
@@ -78,10 +114,39 @@ unsubscribe()
 - `anomaly:cleared`
 - `anomaly:resolved`
 
+```ts
+sentinel.on('preparing:completed', event => {
+  console.log(event)
+})
+
+sentinel.on('runtime:failed', error => {
+  console.error(error)
+})
+
+sentinel.on('anomaly:confirmed', anomaly => {
+  console.log(anomaly)
+})
+```
+
 ## When to listen
 
-- Listen to `session:stateChanged` for overall lifecycle changes
-- Listen to setup events if you are building a custom UI on top of
+- Use `onStateChanged(...)` for overall lifecycle changes
+- Listen to preparation events if you are building a custom UI on top of
   `@testpress/sentinel-core`
 - Listen to anomaly events if you want to surface warnings or audit activity in your
   own application
+
+## Error behavior
+
+`prepare()`, `start()`, and `resolveUserAction(...)` can throw a `TPSentinelError`.
+Handle these calls with `try...catch` when you need to show an error or perform
+application-specific cleanup.
+
+```ts
+try {
+  await sentinel.prepare()
+  await sentinel.start()
+} catch (error) {
+  console.error('Sentinel failed:', error)
+}
+```

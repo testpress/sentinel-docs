@@ -1,14 +1,16 @@
 ---
 title: Configuration
-description: Reference for Sentinel.init options
+description: Reference for TPSentinel.create options
 ---
 
 # Configuration
 
-Initialize the SDK with `Sentinel.init(...)`.
+Create an SDK instance with `TPSentinel.create(...)`.
 
 ```ts
-Sentinel.init({
+import { TPSentinel } from '@testpress/sentinel-core'
+
+const sentinel = TPSentinel.create({
   orgCode: 'your-org',
   sessionId: 'session-id',
   token: 'session-token',
@@ -46,6 +48,6 @@ The session token returned by your backend for that session.
 You can also inspect current SDK state at runtime:
 
 ```ts
-Sentinel.getConfig()
-Sentinel.getState()
+sentinel.getState()
+sentinel.getPendingUserAction()
 ```

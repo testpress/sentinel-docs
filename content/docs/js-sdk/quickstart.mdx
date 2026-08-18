@@ -16,23 +16,39 @@ npm install @testpress/sentinel-core
 ## Initialize Sentinel
 
 ```ts
-import { Sentinel } from '@testpress/sentinel-core'
+import { TPSentinel } from '@testpress/sentinel-core'
 
-Sentinel.init({
+const sentinel = TPSentinel.create({
   orgCode: 'your-org',
   sessionId: 'session-id',
   token: 'session-token',
 })
 ```
 
-## Start Sentinel
+## Prepare and start Sentinel
 
 ```ts
-await Sentinel.start()
+const unsubscribe = sentinel.onStateChanged(state => {
+  console.log('Sentinel state:', state)
+})
+
+try {
+  await sentinel.prepare()
+  await sentinel.start()
+} catch (error) {
+  console.error('Sentinel failed:', error)
+}
 ```
 
-`Sentinel.start()` runs setup first, then starts active proctoring after setup
-completes successfully.
+`sentinel.prepare()` performs setup and can pause in the `awaiting_user_action`
+state when your application needs to collect input. Once Sentinel reaches `ready`,
+`sentinel.start()` begins active proctoring.
+
+When you no longer need the state listener, unsubscribe it:
+
+```ts
+unsubscribe()
+```
 
 ## What this package gives you
 

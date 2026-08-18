@@ -104,10 +104,25 @@ export default function HomePage() {
             >
               <pre className="text-sm leading-6">
                 <code className="block whitespace-pre-wrap break-all">
+                  <span className="text-sky-300">import</span>{' '}
+                  <span className="text-stone-400">{'{'}</span>{' '}
+                  <span className="text-stone-50">TPSentinel</span>{' '}
+                  <span className="text-stone-400">{'}'}</span>{' '}
+                  <span className="text-sky-300">from</span>{' '}
+                  <span className="text-amber-300">'@testpress/sentinel-core'</span>
+                  {'\n'}
+                  <span className="text-sky-300">import</span>{' '}
+                  <span className="text-stone-400">{'{'}</span>{' '}
+                  <span className="text-stone-50">TPSentinelUI</span>{' '}
+                  <span className="text-stone-400">{'}'}</span>{' '}
+                  <span className="text-sky-300">from</span>{' '}
+                  <span className="text-amber-300">'@testpress/sentinel-ui'</span>
+                  {'\n'}
+                  {'\n'}
                   <span className="text-sky-300">const</span>{' '}
                   <span className="text-stone-50">sentinel</span>{' '}
                   <span className="text-stone-400">=</span>{' '}
-                  <span className="text-emerald-300">Sentinel.init</span>
+                  <span className="text-emerald-300">TPSentinel.create</span>
                   <span className="text-stone-400">(</span>
                   <span className="text-stone-400">{'{'}</span>
                   {'\n'}
@@ -126,15 +141,12 @@ export default function HomePage() {
                   <span className="text-stone-400">)</span>
                   {'\n'}
                   {'\n'}
-                  <span className="text-emerald-300">mountSentinelOverlay</span>
+                  <span className="text-sky-300">const</span>{' '}
+                  <span className="text-stone-50">sentinelUI</span>{' '}
+                  <span className="text-stone-400">=</span>{' '}
+                  <span className="text-emerald-300">TPSentinelUI.create</span>
                   <span className="text-stone-400">(</span>
                   <span className="text-stone-400">{'{'}</span>
-                  {'\n'}
-                  {'  '}
-                  <span className="text-stone-50">container</span>
-                  <span className="text-stone-400">:</span>{' '}
-                  <span className="text-stone-50">overlayContainer</span>
-                  <span className="text-stone-400">,</span>
                   {'\n'}
                   {'  '}
                   <span className="text-stone-50">sentinel</span>
@@ -142,6 +154,11 @@ export default function HomePage() {
                   {'\n'}
                   <span className="text-stone-400">{'}'}</span>
                   <span className="text-stone-400">)</span>
+                  {'\n'}
+                  {'\n'}
+                  <span className="text-sky-300">await</span>{' '}
+                  <span className="text-emerald-300">sentinelUI.start</span>
+                  <span className="text-stone-400">()</span>
                 </code>
               </pre>
             </CodeBlock>
@@ -211,9 +228,9 @@ export default function HomePage() {
               <pre className="text-sm leading-6">
                 <code className="whitespace-pre-wrap break-all">{`<script type="module">
   import {
-    Sentinel,
-    mountSentinelOverlay,
-  } from "https://static.tpsentinel.com/sdk/v2/core_1.0.2_ui_1.0.0/sentinel-bundle.js";
+    TPSentinel,
+    TPSentinelUI,
+  } from "https://static.tpsentinel.com/sdk/v2/core_1.0.6_ui_1.0.6/sentinel-bundle.js";
 </script>`}</code>
               </pre>
             </CodeBlock>

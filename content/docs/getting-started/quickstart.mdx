@@ -83,34 +83,35 @@ npm install @testpress/sentinel-core @testpress/sentinel-ui
 `@testpress/sentinel-ui` provides the default UI overlays for setup, consent,
 permissions, identity verification, warnings, and session monitoring.
 
-## 5. Initialize Sentinel and mount the default UI
+## 5. Create Sentinel and start the default UI
 
-On the frontend, initialize Sentinel with the session details returned by your backend,
-then mount the default UI overlay.
+On the frontend, create Sentinel with the session details returned by your backend,
+then create and start the default UI.
 
 ```ts
-import { Sentinel } from '@testpress/sentinel-core'
-import { mountSentinelOverlay } from '@testpress/sentinel-ui'
+import { TPSentinel } from '@testpress/sentinel-core'
+import { TPSentinelUI } from '@testpress/sentinel-ui'
 
-Sentinel.init({
+const sentinel = TPSentinel.create({
   orgCode: '<organization-id>',
   sessionId: '<session-id>',
   token: '<session-token>',
 })
 
-const overlay = mountSentinelOverlay({
-  container: document.body,
-  sentinel: Sentinel,
+const sentinelUI = TPSentinelUI.create({
+  sentinel,
 })
+
+await sentinelUI.start()
 ```
 
 The default overlay integrates with the headless SDK and handles the candidate-facing
 setup and session UI automatically.
 
-If you need to remove it later:
+To remove the UI completely:
 
 ```ts
-overlay.unmount()
+sentinelUI.destroy()
 ```
 
 ## What happens next
