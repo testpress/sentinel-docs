@@ -227,10 +227,8 @@ export default function HomePage() {
             >
               <pre className="text-sm leading-6">
                 <code className="whitespace-pre-wrap break-all">{`<script type="module">
-  import {
-    TPSentinel,
-    TPSentinelUI,
-  } from "https://static.tpsentinel.com/sdk/v2/core_1.0.6_ui_1.0.6/sentinel-bundle.js";
+  import { TPSentinel } from "https://static.tpsentinel.com/sdk/v2/core/1.0.6/sentinel-core.js";
+  import { TPSentinelUI } from "https://static.tpsentinel.com/sdk/v2/ui/1.0.6/sentinel-ui.js";
 </script>`}</code>
               </pre>
             </CodeBlock>

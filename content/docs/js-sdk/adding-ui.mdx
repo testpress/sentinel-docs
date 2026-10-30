@@ -46,9 +46,8 @@ const sentinelUI = TPSentinelUI.create({
 await sentinelUI.start()
 ```
 
-There is no separate `mountSentinelOverlay(...)` API. `TPSentinelUI.create(...)`
-creates the UI controller, and `sentinelUI.start()` mounts the overlay and starts
-the Sentinel flow.
+`TPSentinelUI.create(...)` creates the UI controller, and `sentinelUI.start()`
+mounts the overlay and starts the Sentinel flow.
 
 `@testpress/sentinel-ui` renders the default setup and monitoring overlays for:
 
